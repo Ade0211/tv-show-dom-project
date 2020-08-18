@@ -1,3 +1,21 @@
+/* *{
+  margin: 0;
+  padding: 0;
+} */
+
+html{
+  font-size: 15px;
+}
 #root {
   color: red;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 90%;
+}
+
+.features{
+  width: 20%;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+  border: 5px;
 }
