@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV Show Project | Adebola (Ade0211)</title>
     <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
-
   <body>
-    <input id="searchbar" onkeyup="search_movie()" type="text"
+    <input id="search-bar" onkeyup="search_movie()" type="text"
         name="search" placeholder="Search movies..">
+
+   <select name="movies" id="select">Select</select>
     <div id="root">  
     </div>
-    
     <button onclick = "GFG_Fun()"> 
-      Original Data
+     please click for Original Data
   </button>
+
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 

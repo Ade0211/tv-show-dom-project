@@ -1,31 +1,60 @@
 //You can edit ALL of the code here
 
-
+// creating a search-bar for the movies
+/////////////////////////////
 function search_movie() { 
-  let input = document.getElementById('searchbar').value 
+  let input = document.getElementById('search-bar').value 
   input=input.toLowerCase(); 
   let x = document.getElementsByClassName('features'); 
-    
   for (i = 0; i < x.length; i++) {  
+  
       if (!x[i].innerHTML.toLowerCase().includes(input)) { 
           x[i].style.display="none"; 
       } 
       else { 
-          x[i].style.display="list-item";                  
+          x[i].style.display="block";                  
       } 
+      
   } 
 }
 
+// creating a dropdown select placeholder
+///////////////////////////////////////
+  const allEpisodes = getAllEpisodes();
+  for(var i = 0;i<allEpisodes.length;i++){
+    var option = document.createElement("option");
+    option.text = `S${allEpisodes[i].season>9?allEpisodes[i].season: "0" +allEpisodes[i].season} 
+    E${allEpisodes[i].number>9?allEpisodes[i].number: "0" + allEpisodes[i].number} - ${allEpisodes[i].name}`;
+    option.value = i;
+    var select = document.getElementById("select");
+    select.appendChild(option);
+  }
+// using the dropdown selector to go directly to the movie picked
+////////////////////////////////////////
+  let selection = document.querySelector("#select");
+ selection.addEventListener("click",() =>{
+ let searchBar =  document.getElementById('search-bar');
+ console.log((selection.options[selection.selectedIndex].text).split("-"));
+  searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1];
+  selection.textContent = "remaining";
+  search_movie();
+});
+
+// getting allEpisodes
+/////////////////
 function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 } 
-
+//  getting episodeList
+//////////////////
 function makePageForEpisodes(episodeList) {
-const rootElem = document.getElementById("root");
-
+  const rootElem = document.getElementById("root");
+// loop through the array of movies
 for(let i = 0; i < episodeList.length; i++){
+  // creating a new div for every movie
   const newDiv = document.createElement("div");
+  // giving a className to the new div
   newDiv.className = "features";
   rootElem.appendChild(newDiv);
   newDiv.innerHTML= `${episodeList[i].name} - S${episodeList[i].season>9?episodeList[i].season: "0" +episodeList[i].season} 
@@ -35,28 +64,22 @@ for(let i = 0; i < episodeList.length; i++){
  
 }
 
-
 }
 window.onload = setup;
 
-
-function GFG_Fun() { 
-                  
+// A link to the original data
+////////////////////
+function GFG_Fun(e) { 
+              
   // Create anchor element. 
-  var a = document.createElement('a');  
-    
-  // Create the text node for anchor element. 
-  var link = document.createTextNode("Tv maze Link"); 
-    
-  // Append the text node to anchor element. 
-  a.appendChild(link);  
-    
-  // Set the title. 
-  a.title = "Tv maze Link";  
+  let a = document.createElement('a');   
     
   // Set the href property. 
-  a.href = "https://www.tvmaze.com/";  
+  a.href =window.open('https://www.TvMaze.com', '_blank');  
+
     
   // Append the anchor element to the body. 
-  document.body.appendChild(a);  
+  document.body.appendChild(a); 
+  
 } 
+
