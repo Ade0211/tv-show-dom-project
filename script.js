@@ -2,8 +2,10 @@
 
 // creating a search-bar for the movies
 /////////////////////////////
-function search_movie() { 
+function search_movie() {
+let counter = 0; 
   let input = document.getElementById('search-bar').value 
+  let display = document.getElementById('episode-number');
   input=input.toLowerCase(); 
   let x = document.getElementsByClassName('features'); 
   for (i = 0; i < x.length; i++) {  
@@ -12,10 +14,12 @@ function search_movie() {
           x[i].style.display="none"; 
       } 
       else { 
-          x[i].style.display="block";                  
+          x[i].style.display="block";
+          counter++;                  
       } 
       
   } 
+  document.getElementById('charNum').innerHTML = counter;
 }
 
 // creating a dropdown select placeholder
@@ -36,9 +40,11 @@ function search_movie() {
  let searchBar =  document.getElementById('search-bar');
  console.log((selection.options[selection.selectedIndex].text).split("-"));
   searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1];
-  selection.textContent = "remaining";
   search_movie();
+ 
 });
+
+
 
 // getting allEpisodes
 /////////////////
@@ -57,10 +63,11 @@ for(let i = 0; i < episodeList.length; i++){
   // giving a className to the new div
   newDiv.className = "features";
   rootElem.appendChild(newDiv);
-  newDiv.innerHTML= `${episodeList[i].name} - S${episodeList[i].season>9?episodeList[i].season: "0" +episodeList[i].season} 
-  E${episodeList[i].number>9?episodeList[i].number: "0" + episodeList[i].number}
-  <img src="${episodeList[i].image.medium}" alt="">
-  ${episodeList[i].summary>9?episodeList[i].summary>9:episodeList[i].summary}`;
+  newDiv.innerHTML= `<p id="header">${episodeList[i].name} - S${episodeList[i].season>9?episodeList[i].season: "0" +episodeList[i].season} 
+  E${episodeList[i].number>9?episodeList[i].number: "0" + episodeList[i].number}</p>
+ <p><img src="${episodeList[i].image.medium}" alt="">
+  ${episodeList[i].summary>9?episodeList[i].summary>9:episodeList[i].summary}</p> `;
+  
  
 }
 
