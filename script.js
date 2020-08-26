@@ -14,7 +14,7 @@ let counter = 0;
           x[i].style.display="none"; 
       } 
       else { 
-          x[i].style.display="block";
+          x[i].style.display="block "; 
           counter++;                  
       } 
       
@@ -41,7 +41,7 @@ let counter = 0;
  console.log((selection.options[selection.selectedIndex].text).split("-"));
   searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1];
   search_movie();
- 
+  
 });
 
 
