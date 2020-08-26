@@ -54,6 +54,11 @@ button {
   color: antiquewhite;
 
 }
+
+#back-link {
+  display: flex;
+  justify-items: flex-end;
+}
 @media  only screen and (max-width: 756px){
   html{
     font-size: 0.6rem;

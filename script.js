@@ -12,12 +12,14 @@ let counter = 0;
   
       if (!x[i].innerHTML.toLowerCase().includes(input)) { 
           x[i].style.display="none"; 
+          document.getElementById("back-link").style.visibility = "visible"; 
       } 
       else { 
-          x[i].style.display="block "; 
-          counter++;                  
-      } 
-      
+          x[i].style.display="block"; 
+         
+          counter++;    
+          document.getElementById("back-link").style.visibility = "hidden";              
+      }   
   } 
   document.getElementById('charNum').innerHTML = counter;
 }
@@ -32,6 +34,7 @@ let counter = 0;
     option.value = i;
     var select = document.getElementById("select");
     select.appendChild(option);
+    document.getElementById("back-link").style.visibility = "hidden";
   }
 // using the dropdown selector to go directly to the movie picked
 ////////////////////////////////////////
@@ -41,6 +44,7 @@ let counter = 0;
  console.log((selection.options[selection.selectedIndex].text).split("-"));
   searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1];
   search_movie();
+  document.getElementById("back-link").style.visibility = "visible";
   
 });
 
@@ -87,6 +91,7 @@ function GFG_Fun(e) {
     
   // Append the anchor element to the body. 
   document.body.appendChild(a); 
-  
 } 
+
+
 
