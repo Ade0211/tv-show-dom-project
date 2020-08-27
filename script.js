@@ -39,7 +39,7 @@ let counter = 0;
 // using the dropdown selector to go directly to the movie picked
 ////////////////////////////////////////
   let selection = document.querySelector("#select");
- selection.addEventListener("click",() =>{
+ selection.addEventListener("change",() =>{
  let searchBar =  document.getElementById('search-bar');
  console.log((selection.options[selection.selectedIndex].text).split("-"));
   searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1];
