@@ -6,25 +6,21 @@
     <title>TV Show Project | Adebola (Ade0211)</title>
     <link href="style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap" rel="stylesheet">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" /> 
   </head>
   <body>
     <input id="search-bar" onkeyup="search_movie()" type="text"
         name="search" placeholder="Search movies..">
-
-   <select name="movies" id="select"></select>
-   <!-- <textarea name="message" ></textarea> -->
-   <p>Displaying <span id="charNum">73</span>/73 Episodes</p>
+   <select name="movies" id="select" autofocus></select>
+   <a id="back-link" href="http://127.0.0.1:5501/index.html" onClick="history.go(-1)">Back</a>
+   <p>Displaying <span id="charNum">73</span>/73 Episodes</p> 
     <div id="root"> 
-    </div>
-    <button onclick = "GFG_Fun()"> 
+    </div> 
+    <button onclick = "originalLink()"> 
      please click for Original Data
   </button>
-  <a id="back-link" href="http://127.0.0.1:5501/index.html" onClick="history.go(-1)">Back</a>
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
-
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   </body>
