@@ -35,8 +35,10 @@ let counter = 0;
 // creating a dropdown select placeholder
 ///////////////////////////////////////
 
-  const allEpisodes = getAllEpisodes();
-  for(let i = 0;i<allEpisodes.length;i++){
+  fetch("https://api.tvmaze.com/shows/82/episodes").then(function(response){
+   
+    return response.json();
+  }).then(allEpisodes =>  {  for(let i = 0;i<allEpisodes.length;i++){
     let option = document.createElement("option");
     option.text = `S${allEpisodes[i].season>9?allEpisodes[i].season: "0" +allEpisodes[i].season} 
     E${allEpisodes[i].number>9?allEpisodes[i].number: "0" + allEpisodes[i].number} - ${allEpisodes[i].name}`;
@@ -45,6 +47,10 @@ let counter = 0;
     select.appendChild(option);
     document.getElementById("back-link").style.visibility = "hidden";
   }
+
+  } )
+  .catch(error => console.log(error));
+ 
 
 // using the dropdown selector to go directly to the movie picked
 ////////////////////////////////////////
@@ -61,11 +67,15 @@ let counter = 0;
 
 // getting allEpisodes
 /////////////////
-
+// fetch("https://api.tvmaze.com/shows/82/episodes")
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  fetch("https://api.tvmaze.com/shows/82/episodes").then(function(response){
+    return response.json();
+  }).then(allEpisodes =>  makePageForEpisodes(allEpisodes)).catch(error => console.log(error))
+  // console.log(allEpisodes);
+ 
 } 
+
 //  getting episodeList
 //////////////////
 function makePageForEpisodes(episodeList) {
