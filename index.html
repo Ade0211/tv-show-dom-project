@@ -9,14 +9,25 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" /> 
   </head>
   <body>
-    <input id="search-bar" onkeyup="search_movie()" type="text"
+    <div id="headerContent">
+    <input id="search-bar" onkeyup= search_movie() type="text"
         name="search" placeholder="Search movies..">
-   <select name="movies" id="select" autofocus></select>
-   <select name="movies" id="select2" autofocus>All Movies</select>
+        <label for="">
+          <select name="" id="select2">
+           <option value="" id="All-movies">All Movies</option>
+          </select>
+        </label>
+        <label for="">
+   <select name="movies" id="select" autofocus>
+     <option value="" id="Episodes">Episodes</option>
+   </select>
+  </label> 
+  </div>
    <a id="back-link" href="http://127.0.0.1:5501/index.html" onClick="history.go(-1)">Back</a>
-   <p>Displaying <span id="charNum">73</span>/73 Episodes</p> 
+   <p><span id="charNum"></p> 
     <div id="root"> 
-    </div> 
+    </div>
+    
     <button onclick = "originalLink()"> 
      please click for Original Data
   </button>
