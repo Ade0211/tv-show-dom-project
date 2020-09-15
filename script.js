@@ -10,9 +10,7 @@
       input=input.toLowerCase(); 
       let movies = document.getElementsByClassName('features'); 
       let listOfSearchedMovies = [...movies].filter((episodes)=>episodes.innerHTML.toLowerCase().includes(input))
-      
         console.log({movies:movies});
-      
      for(episode of listOfSearchedMovies)
       console.log(listOfSearchedMovies);
           if (listOfSearchedMovies.length == 0) { 
@@ -93,7 +91,7 @@
     }
       // counter++;
       document.getElementById('charNum').textContent  = `Displaying ${movieList.length} / ${movieList.length}`
-      
+     
 
     }
     function setup() {
