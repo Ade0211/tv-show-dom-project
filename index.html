@@ -10,21 +10,30 @@
   </head>
   <body>
     <div id="headerContent">
-    <input id="search-bar" onkeyup= search_movie() type="text"
-        name="search" placeholder="Search movies..">
+      <p>Filtering for</p>
+     <input id="search-bar" onkeyup= search_Movies() type="text"
+        name="search" placeholder="Search...">
+        <p><span id="charNum"></p>
+
         <label for="">
-          <select name="" id="select2">
+          <select name="movies" id="select2">
            <option value="" id="All-movies">All Movies</option>
           </select>
         </label>
         <label for="">
-   <select name="movies" id="select" autofocus>
+   <select name="Episodes" id="select" autofocus>
      <option value="" id="Episodes">Episodes</option>
    </select>
   </label> 
+  <label for="">
+    <select name="Season" id="select-season" autofocus>
+      <option value="" id="Season">Season</option>
+    </select>
+   </label> 
+ 
   </div>
-   <a id="back-link" href="http://127.0.0.1:5501/index.html" onClick="history.go(-1)">Back</a>
-   <p><span id="charNum"></p> 
+   <a id="back-link" href="http://127.0.0.1:5502/index.html" onClick="history.go(-2)">Back</a>
+   
     <div id="root"> 
     </div>
     

@@ -1,192 +1,443 @@
-    //You can edit ALL of the code here
+//You can edit ALL of the code here
 
+// using the dropdown selector to go directly to the movie picked
+////////////////////////////////////////
 
-    // creating a search-bar for the movies
-    /////////////////////////////
-    let counter = 0;
-    function search_movie(fromList=false) {
-    
-      let input = document.getElementById('search-bar').value 
-      input=input.toLowerCase(); 
-      let movies = document.getElementsByClassName('features'); 
-      let listOfSearchedMovies = [...movies].filter((episodes)=>episodes.innerHTML.toLowerCase().includes(input))
-        console.log({movies:movies});
-     for(episode of listOfSearchedMovies)
-      console.log(listOfSearchedMovies);
-          if (listOfSearchedMovies.length == 0) { 
-             movies[0].style.display="none";
-            
-              document.getElementById("back-link").style.visibility = "visible"; 
-          } 
-          else { 
-             movies[0].style.display="block"; 
-            if(fromList){
-             movies[0].style.maxWidth = "25%";
-             movies[0].style.maxHeight = "25%";
-              
-            }else{
-             movies[0].style.maxWidth = "22%";
-            }
-           movies[0].style.alignItems = "center";
-             movies[0].style.display = "flex";
-              counter++
-                
-              
-              document.getElementById("back-link").style.visibility = "visible";             
-          } 
-          
-      
-      counter = listOfSearchedMovies.length;
-      document.getElementById('charNum').textContent  = `Displaying ${counter} /${movies.length}`;  
+let selection = document.querySelector("#select");
+selection.addEventListener("change", () => {
+  let searchBar = document.getElementById("search-bar");
+  console.log(selection.options[selection.selectedIndex].text.split("-"));
+  searchBar.value = selection.options[selection.selectedIndex].text.split(
+    " - "
+  )[1];
+  search_Movies();
+  document.getElementById("back-link").style.visibility = "visible ";
+});
+
+// creating a search-bar for the movies
+/////////////////////////////
+
+function search_Movies(moviePage, episodes) {
+  let counter = 0;
+  let input = document.getElementById("search-bar").value;
+  input = input.toLowerCase();
+  let movies = document.querySelectorAll(".features");
+
+  let PageForMovies = document.querySelectorAll(".PageForMovies");
+
+  PageForMovies.forEach((moviePage) => {
+    if (moviePage.innerHTML.toLowerCase().includes(input)) {
+      counter++;
+      moviePage.style.display = "";
+    } else {
+      moviePage.style.display = "none";
     }
-    
+  });
 
-    // using the dropdown selector to go directly to the movie picked
-    ////////////////////////////////////////
-
-      let selection = document.querySelector("#select");
-    selection.addEventListener("change",() =>{   
-    let searchBar =  document.getElementById('search-bar');
-    console.log((selection.options[selection.selectedIndex].text).split("-"));
-      searchBar.value = selection.options[selection.selectedIndex].text.split(" - ")[1]; 
-      search_movie(true);
-      document.getElementById("back-link").style.visibility = "visible "; 
-      
-    });
-    // get allShows
-    ///////////////////
-
-    // getting allMovies
-    ///////////////// 
-
-    const  makePageForMovies = (movieList) => {
-      
-      const rootElem = document.getElementById("root");
-    // loop through the array of movies
-    for(let i = 0; i < movieList.length; i++){
-      // creating a new div for every movie
-      const newDiv = document.createElement("div");
-      // giving a className to the new div
-      newDiv.className = "features";
-      
-      rootElem.appendChild(newDiv);
-      newDiv.innerHTML= `<h1 id="movieListName">${movieList[i].name}</h1> 
-      <div id = "moviePage">
-      <img src="${movieList[i].image? movieList[i].image.medium: ""}" alt="No Image Found">
-      <div id ="summary"><p>${movieList[i].summary}</p></div>
-      <ul><li>Rating: ${movieList[i].rating.average}</li>
-      <li>Status: ${movieList[i].status}</li>
-      <li>Genre: ${movieList[i].genres.map((genre)=>genre)}  </li>
-      <li>Runtime: ${movieList[i].runtime}</li></ul>
-      </div>`;
-      newDiv.style.backgroundColor = "white";
-      newDiv.style.display = "table";
-      newDiv.style.justifyContent = "space-around";
-      newDiv.style.flexWrap = "wrap";
-      newDiv.style.maxWidth = "80%";
-      newDiv.style.margin = "10px";
-      document.getElementById("back-link").style.visibility = "visible";
-      
-      newDiv.addEventListener("click", ()=> getEpisodes(movieList[i].id))
+  movies.forEach((episode) => {
+    if (episode.innerHTML.toLowerCase().includes(input)) {
+      counter++;
+      episode.style.display = "";
+    } else {
+      episode.style.display = "none";
     }
-      // counter++;
-      document.getElementById('charNum').textContent  = `Displaying ${movieList.length} / ${movieList.length}`
-     
+  });
+  if (PageForMovies.length) {
+    document.getElementById("charNum").textContent = `found ${counter} shows`;
+  } else {
+    document.getElementById(
+      "charNum"
+    ).textContent = `Displaying ${counter} /${movies.length}`;
+  }
+}
+// Movie Set Up
+////////////////
 
+function setup() {
+  let allTheMovies = getAllShows().filter((item) => item.id != 1127);
+  console.log(allTheMovies);
+  allTheMovies.sort((a, b) => {
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    } else if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    } else {
+      return 0;
     }
-    function setup() {
-    
-      let allTheMovies = getAllShows();
-      let movieChoice = document.getElementById("select2");
-      for(let i = 0; i < allTheMovies.length; i ++){
-        let movieOptions = document.createElement("option");
-        movieOptions.innerHTML = 
-        `
-        <h1 class="movie-name">${allTheMovies[i].name}</h1>
-          <a href="https://api.tvmaze.com/shows/${allTheMovies[i].id}/episodes"></a>
-        `
-        movieOptions.value = allTheMovies[i].id
-       
-        movieChoice.appendChild(movieOptions)
-      
-        movieChoice.style.width = "150px"; 
-        // getEpisodes(allTheMovies[i].id)
-        // 
-      }
-      document.getElementById("select").style.visibility = "hidden"
-      makePageForMovies(allTheMovies);
-      }
-      
-    
-    function getEpisodes(showID){
-    let rootElem = document.getElementById("root");
-    document.body.removeChild(rootElem);
-    rootElem = document.createElement("div");
-    rootElem.id = "root";
-  
-    let episodeSelector = document.getElementById("select")
-    episodeSelector.style.visibility = "visible";
-    episodeSelector.querySelectorAll("option").forEach((item, i )=> i ? episodeSelector.removeChild(item):NaN)
-    document.body.appendChild(rootElem);
+  });
+  //console.log(allTheMovies);
+  let movieChoice = document.getElementById("select2");
+  for (let i = 0; i < allTheMovies.length; i++) {
+    let movieOptions = document.createElement("option");
+    movieOptions.innerHTML = `
+              <h1 class="movie-name">${allTheMovies[i].name}</h1>
+                <a href="https://api.tvmaze.com/shows/${allTheMovies[i].id}/episodes"></a>
+              `;
+    movieOptions.value = allTheMovies[i].id;
 
-      fetch(`https://api.tvmaze.com/shows/${showID}/episodes`).then(function(response){
-        return response.json();
-      }).then(allEpisodes =>  makePageForEpisodes(allEpisodes)
-      ).catch(error => console.log(error))
-      
+    movieChoice.appendChild(movieOptions);
+
+    movieChoice.style.width = "150px";
+  }
+  document.getElementById("select").style.visibility = "hidden";
+  makePageForMovies(allTheMovies);
+}
+
+// get Seasons
+///////////////////
+function makePageForSeasons(movieSeason) {
+  console.log(movieSeason);
+  const rootElem = document.getElementById("root");
+  // loop through the array of movies
+  for (let i = 0; i < movieSeason.length; i++) {
+    let message = movieSeason[i].summary;
+    let image = movieSeason[i].image.medium;
+    // console.log(image);
+    // console.log(message);
+    if (message) {
+      let char_limit = 100;
+      console.log(message.length);
+      if (message.length < char_limit) {
+        message = "<div> " + message + "</div>";
+        console.log(message);
+      } else
+        message =
+          "<div>" +
+          message.substr(0, char_limit) +
+          '<span class="long-text">' +
+          message.substr(char_limit) +
+          '</span><span class="text-dots">...</span><span class="show-more-button" data-more="0">Read More</span></div>';
+    } else {
+      message = "";
     }
+    let SeasonDiv = document.createElement("div");
+    SeasonDiv.className = "seasons";
 
-    //  getting episodeList
+    SeasonDiv.innerHTML = ` 
+                <div id = "moviePage">
+                <div class ="season"><p>Season ${
+                  movieSeason[i].number
+                }</p></div>
+                <img id="MovieImage" src="${
+                  movieSeason[i].image ? image : ""
+                }" alt="No Image Found">
+                <div id ="summary"><p>${message}</p></div>
+                </div>`;
+    console.log(SeasonDiv);
+    rootElem.appendChild(SeasonDiv);
     //////////////////
+    let dots = SeasonDiv.querySelector(".text-dots");
+    let longText = SeasonDiv.querySelector(".long-text");
+    longText ? (longText.style.display = "none") : NaN;
+    let showMoreButton = SeasonDiv.querySelector(".show-more-button");
 
-    document.getElementById("select2").addEventListener("change", (event)=>
-    {
-      console.log(event.target.value);
-      getEpisodes(event.target.value)
-      }
-      );
+    showMoreButton
+      ? showMoreButton.addEventListener("click", function () {
+          // If text is shown less, then show complete
+          if (this.getAttribute("data-more") == 0) {
+            this.setAttribute("data-more", 1);
+            this.style.display = "block";
+            this.innerHTML = "Read Less";
 
-    function makePageForEpisodes(episodeList) {
-
+            dots.style.display = "none";
+            longText.style.display = "inline";
+          }
+          // If text is shown complete, then show less
+          else if (this.getAttribute("data-more") == 1) {
+            this.setAttribute("data-more", 0);
+            this.style.display = "inline";
+            this.innerHTML = "Read More";
+            dots.style.display = "inline";
+            longText.style.display = "none";
+          }
+        })
+      : NaN;
+    ////////////////
+    movieSeason[i].image?  document.getElementById("select-season").addEventListener("change", (event) => {
       const rootElem = document.getElementById("root");
-    // loop through the array of movies
-    for(let i = 0; i < episodeList.length; i++){
-      // creating a new div for every movie
-      const newDiv = document.createElement("div");
-      // giving a className to the new div
-      newDiv.className = "features";
-      rootElem.appendChild(newDiv);
-      let option = document.createElement("option");
-        option.text = `S${episodeList[i].season>9?episodeList[i].season: "0" +episodeList[i].season} 
-        E${episodeList[i].number>9?episodeList[i].number: "0" + episodeList[i].number} - ${episodeList[i].name}`;
-        option.value = i;
-        document.getElementById("select").appendChild(option);
-      newDiv.innerHTML= `<p id="header">${episodeList[i].name} - S${episodeList[i].season>9?episodeList[i].season: "0" +episodeList[i].season} 
-      E${episodeList[i].number>9?episodeList[i].number: "0" + episodeList[i].number}</p>
-    <p><img src="${episodeList[i].image.medium}" alt="">
-      ${episodeList[i].summary>9?episodeList[i].summary>9:episodeList[i].summary}</p>`;
-      document.getElementById("back-link").style.visibility = "visible";
-      // counter++;
-      document.getElementById('charNum').textContent  = `Displaying ${episodeList.length} / ${episodeList.length}`
+      let seasons = rootElem.querySelectorAll(".seasons");
+      seasons.forEach((item, i) => i? rootElem.removeChild(item): NaN);
+      document.body.appendChild(rootElem);
+      console.log(event.target.value);
+      makePageForSeasons(event.target.value);
       
+    }): " ";
+    SeasonSelector = document.getElementById('select-season');
+    var opt = document.createElement('option');
+    // opt.value = movieSeason[i].number;
+    opt.innerHTML = `<p>Season ${movieSeason[i].number}</p>`;
+    SeasonSelector.appendChild(opt);
+    console.log(SeasonSelector);
+
+    ////////////////
+    SeasonDiv.addEventListener("click", function (event) {
+      // alert(movieSeason[i].id);
+      fetch(`https://api.tvmaze.com/shows/${movieSeason[i].id}/episodes`)
+        .then(function (response) {
+          return response.json();
+        })
+        .then((allEpisodes) => {
+          console.log(allEpisodes);
+          makePageForEpisodes(
+            allEpisodes.filter((item) => item.season === movieSeason[i].number)
+          );
+        })
+        .catch((error) => console.log(error));
+    });
+  }
+}
+
+
+/////////
+
+
+//Episodes ID
+function getEpisodes(showID) {
+  let rootElem = document.getElementById("root");
+  document.body.removeChild(rootElem);
+  rootElem = document.createElement("div");
+  rootElem.id = "root";
+  let episodeSelector = document.getElementById("select");
+  episodeSelector.style.visibility = "visible";
+  episodeSelector
+    .querySelectorAll("option")
+    .forEach((item, i) => (i ? episodeSelector.removeChild(item) : NaN));
+  document.body.appendChild(rootElem);
+
+  fetch(`https://api.tvmaze.com/shows/${showID}/seasons`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then((allSeasons) => makePageForSeasons(allSeasons))
+    .catch((err) => {
+      console.log(err);
+      fetch(`https://api.tvmaze.com/shows/${showID}/episodes`)
+        .then(function (response) {
+          return response.json();
+        })
+        .then((allEpisodes) => {
+          makePageForEpisodes(allEpisodes);
+        })
+        .catch((error) => console.log(error));
+    });
+}
+
+
+
+// get allShows
+///////////////////
+
+const makePageForMovies = (movieList) => {
+  const rootElem = document.getElementById("root");
+  // loop through the array of movies
+  for (let i = 0; i < movieList.length; i++) {
+    // creating a new div for every movie
+    const movieDiv = document.createElement("div");
+
+    let cast = "";
+    // giving a className to the new div
+    movieDiv.className = "PageForMovies";
+    rootElem.appendChild(movieDiv);
+    let title = document.createElement("h1");
+    title.innerText = movieList[i].name;
+    title.style.cursor = "pointer";
+
+    fetch(`http://api.tvmaze.com/shows/${movieList[i].id}?embed=cast`)
+      .then((response) => response.json())
+      .then((data) => {
+        data._embedded.cast
+          ? data._embedded.cast.forEach(
+              (person) => (cast += person.person.name + ", ")
+            )
+          : NaN;
+
+        let char_limit = 50;
+        if (cast.length < char_limit) {
+          cast = "<div> " + cast + "</div>";
+        } else
+          cast =
+            "<div>" +
+            cast.substr(0, char_limit) +
+            '<span class="long-text">' +
+            cast.substr(char_limit) +
+            '</span><span class="text-dots">...</span><span class="show-more-button" data-more="0">Read More</span></div>';
+        // console.log(cast)
+        movieDiv.innerHTML = ` 
+              <div id = "moviePage">
+              <img id="MovieImage" src="${
+                movieList[i].image ? movieList[i].image.medium : ""
+              }" alt="No Image Found">
+              <div id ="summary"><p>${movieList[i].summary}</p></div>
+              <div id="movieType">
+              <ul><li>Rating: ${movieList[i].rating.average}</li>
+              <li>Status: ${movieList[i].status}</li>
+              <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
+              <li>Runtime: ${movieList[i].runtime}</li>
+              <li>Cast: ${cast}</li></ul>
+              </div>
+              </div>`;
+        movieDiv.insertBefore(title, movieDiv.firstChild);
+
+        let dots = movieDiv.querySelector(".text-dots");
+        let longText = movieDiv.querySelector(".long-text");
+        longText ? (longText.style.display = "none") : NaN;
+        let showMoreButton = movieDiv.querySelector(".show-more-button");
+
+        showMoreButton
+          ? showMoreButton.addEventListener("click", function () {
+              // If text is shown less, then show complete
+              if (this.getAttribute("data-more") == 0) {
+                this.setAttribute("data-more", 1);
+                this.style.display = "block";
+                this.innerHTML = "Read Less";
+
+                dots.style.display = "none";
+                longText.style.display = "inline";
+              }
+              // If text is shown complete, then show less
+              else if (this.getAttribute("data-more") == 1) {
+                this.setAttribute("data-more", 0);
+                this.style.display = "inline";
+                this.innerHTML = "Read More";
+
+                dots.style.display = "inline";
+                longText.style.display = "none";
+              }
+            })
+          : NaN;
+      })
+      .catch((error) => console.log(error));
+    movieDiv.style.backgroundColor = "white";
+    // rootElem.style.display = "table";
+    rootElem.style.display = "flex";
+    rootElem.style.flexDirection = "column";
+    rootElem.style.alignItems = "center";
+    // movieDiv.style.justifyContent = "space-evenly";
+    movieDiv.style.flexWrap = "wrap";
+    movieDiv.style.borderRadius = "5px";
+    movieDiv.style.boxShadow = "15px";
+    // movieDiv.style.position ="absolute";
+    movieDiv.style.width = "80%";
+    movieDiv.style.margin = "10px";
+    document.getElementById("back-link").style.visibility = "visible";
+    // console.log(title);
+    title.addEventListener("click", () => getEpisodes(movieList[i].id));
+  }
+  // counter++;
+  document.getElementById(
+    "charNum"
+  ).textContent = `found ${movieList.length} shows`;
+};
+//  getting episodeList
+//////////////////
+document.getElementById("select2").addEventListener("change", (event) => {
+  console.log(event.target.value);
+  getEpisodes(event.target.value);
+});
+
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  let seasons = rootElem.querySelectorAll(".seasons");
+  seasons.forEach((item) => rootElem.removeChild(item));
+  // loop through the array of movies
+  for (let i = 0; i < episodeList.length; i++) {
+    let message = episodeList[i].summary;
+    if (message) {
+      let char_limit = 100;
+      console.log(message.length);
+      if (message.length < char_limit) {
+        message = "<div> " + message + "</div>";
+        console.log(message);
+      } else
+        message =
+          "<div>" +
+          message.substr(0, char_limit) +
+          '<span class="long-text">' +
+          message.substr(char_limit) +
+          '</span><span class="text-dots">...</span><span class="show-more-button" data-more="0">Read More</span></div>';
+    } else {
+      message = "";
     }
+    let season = episodeList[i].season;
+    console.log(season);
+    let episodeNumber = episodeList[i].number;
+    console.log(episodeNumber);
+    let image = episodeList[i].image;
 
-    }
-    window.onload = setup;
+    // creating a new div for every movie
+    const movieDiv = document.createElement("div");
+    // giving a className to the movie div
+    movieDiv.className = "features";
+    rootElem.appendChild(movieDiv);
+    let option = document.createElement("option");
+    option.text = `S${season > 9 ? season : "0" + season} 
+              E${episodeNumber > 9 ? episodeNumber : "0" + episodeNumber} - ${
+      episodeList[i].name
+    }`;
+    option.value = i;
+    console.log(option);
+    document.getElementById("select").appendChild(option);
+    image
+      ? (movieDiv.innerHTML = `<p id="header">${episodeList[i].name} - S${
+          season > 9 ? season : "0" + season
+        } 
+        E${episodeNumber > 9 ? episodeNumber : "0" + episodeNumber}</p>
+      <p><img src="${image.medium}" alt="">
+      ${message}
+      </p>`)
+      : (movieDiv.innerHTML = `<p id="header">${episodeList[i].name} - S${
+          season > 9 ? season : "0" + season
+        } 
+        E${episodeNumber > 9 ? episodeNumber : "0" + episodeNumber}</p>
+      <p>
+      ${message}
+      </p>`);
 
-    // A link to the original data
-    ////////////////////
-    function originalLink(e) { 
-                  
-      // Create anchor element. 
-      let a = document.createElement('a');   
-        
-      // Set the href property. 
-      a.href =window.open('https://www.TvMaze.com', '_blank');  
+    let dots = movieDiv.querySelector(".text-dots");
+    let longText = movieDiv.querySelector(".long-text");
+    longText ? (longText.style.display = "none") : NaN;
+    let showMoreButton = movieDiv.querySelector(".show-more-button");
 
-        
-      // Append the anchor element to the body. 
-      document.body.appendChild(a); 
-    } 
+    showMoreButton
+      ? showMoreButton.addEventListener("click", function () {
+          // If text is shown less, then show complete
+          if (this.getAttribute("data-more") == 0) {
+            this.setAttribute("data-more", 1);
+            this.style.display = "block";
+            this.innerHTML = "Read Less";
 
+            dots.style.display = "none";
+            longText.style.display = "inline";
+          }
+          // If text is shown complete, then show less
+          else if (this.getAttribute("data-more") == 1) {
+            this.setAttribute("data-more", 0);
+            this.style.display = "inline";
+            this.innerHTML = "Read More";
 
+            dots.style.display = "inline";
+            longText.style.display = "none";
+          }
+        })
+      : NaN;
+    document.getElementById("back-link").style.visibility = "visible";
+    // counter++;
+    document.getElementById(
+      "charNum"
+    ).textContent = `Displaying ${episodeList.length} / ${episodeList.length}`;
+  }
+}
+window.onload = setup;
+
+// A link to the original data
+////////////////////
+function originalLink(e) {
+  // Create anchor element.
+  let a = document.createElement("a");
+
+  // Set the href property.
+  a.href = window.open("https://www.TvMaze.com", "_blank");
+
+  // Append the anchor element to the body.
+  document.body.appendChild(a);
+}

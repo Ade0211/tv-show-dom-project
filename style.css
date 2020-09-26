@@ -3,19 +3,24 @@
   padding: 0;
 } */
 body{
-  background-color:#510a32;
+  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
 }
 html{
   font-family:'Oswald', sans-serif ;
   font-size: 0.9rem;
 }
 #root {
-  background-color:#2D142C;
+  background-image: linear-gradient(to right,orange, blue,yellow,green,rgb(128, 75, 165));
   color:black;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  /* flex-direction: column; */
+  flex-wrap: wrap; 
+   justify-content: center;
   max-width: 100%;
+}
+#headerContent {
+  display: flex;
+  justify-content: space-around;
 }
 
 .features{
@@ -25,8 +30,9 @@ html{
   border-radius: 3%;
   margin: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
-  max-width: 22%;
+  width: 22.5%;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -51,8 +57,23 @@ button {
   background-color: #344E5c;
   color: antiquewhite;
 }
+ul{
+  
+  padding: 20px;
+}
 li{
-  max-width: 70px;
+  
+  max-width: 90%;
+  list-style-type: none;
+  margin-top: 5%;
+  
+}
+#movieType{
+  background-color: #c3d1d8;
+ margin-right: 20px;
+ width: 40%;
+ box-shadow: 0 0 1rem #9ea5a5;
+  
 }
 
 #header{
@@ -62,12 +83,20 @@ li{
   background-color: #344E5c;
   /* border-radius: 20px; */
   color: antiquewhite;
-  width: 100%;
+  width: 80%;
 
 }
 #movieListName{
   display: flex;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
+  cursor: pointer;
+}
+#MovieImage{
+  width:250px;
+  height: auto;
+ 
+}
+.show-more-button{
   cursor: pointer;
 }
 /* .PageForMovies{
@@ -81,29 +110,34 @@ li{
 #moviePage{
 display: flex;
 justify-content: center;
-margin-top: 10px;
-max-Width: 80%;
+/* margin-top: 10px; */
+max-Width: 100%;
+
 }
 
 #back-link {
   display: flex;
-  float: right;
+  
 }
 #summary {
   padding-left: 15px;
+  width: 60%;
 }
 .PageForMovies h1:hover {
   color: #344E5c;
   /* opacity: 0.2; */
   transition: 0.3s;
-  max-width: 80%;
+  /* max-width: 80%; */
  
 
 }
-@media  only screen and (max-width: 756px){
+@media  only screen and (max-width: 722px){
   html{
     font-size: 0.6rem;
   }
+ .PageForMovies{
+   flex-direction: column;
+ }
 }
 @media only screen and (max-width: 494px) {
   body {
@@ -112,9 +146,21 @@ max-Width: 80%;
   html{
     font-size: 0.5rem;
   }
+  .PageForMovies{
+    flex-direction: column;
+  }
+#moviePage{
+  flex-direction: column;
+}
 }
 @media  only screen and (max-width: 345px){
   html{
     font-size: 0.4rem;
+  }
+  .PageForMovies{
+    flex-direction: column;
+  }
+  #moviePage{
+    flex-direction: column;
   }
 }
