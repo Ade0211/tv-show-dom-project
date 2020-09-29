@@ -59,7 +59,7 @@ const makePageForMovies = (movieList) => {
           ? data._embedded.cast.forEach(
               (person) => (cast += person.person.name + ", ")
             )
-          : NaN;
+          : data._embedded;
 
         let char_limit = 50;
         if (cast.length < char_limit) {
@@ -72,7 +72,7 @@ const makePageForMovies = (movieList) => {
             cast.substr(char_limit) +
             '</span><span class="text-dots">...</span><span class="show-more-button" data-more="0">Read More</span></div>';
         // console.log(cast)
-    cast ?    movieDiv.innerHTML = ` 
+        movieDiv.innerHTML = ` 
               <div id = "moviePage">
               <img id="MovieImage" src="${
                 movieList[i].image ? movieList[i].image.medium : ""
@@ -85,17 +85,7 @@ const makePageForMovies = (movieList) => {
               <li>Runtime: ${movieList[i].runtime}</li>
               <li>Cast: ${cast}</li></ul>
               </div>
-              </div>`: ` <div id = "moviePage">
-              <img id="MovieImage" src="${
-                movieList[i].image ? movieList[i].image.medium : ""
-              }" alt="No Image Found">
-              <div id ="summary"><p>${movieList[i].summary}</p></div>
-              <div id="movieType">
-              <ul><li>Rating: ${movieList[i].rating.average}</li>
-              <li>Status: ${movieList[i].status}</li>
-              <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
-              <li>Runtime: ${movieList[i].runtime}</li>`;
-              
+              </div>`;
         movieDiv.insertBefore(title, movieDiv.firstChild);
 
         let dots = movieDiv.querySelector(".text-dots");
