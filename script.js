@@ -85,7 +85,17 @@ const makePageForMovies = (movieList) => {
               <li>Runtime: ${movieList[i].runtime}</li>
               <li>Cast: ${cast}</li></ul>
               </div>
-              </div>`: NaN;
+              </div>`: ` <div id = "moviePage">
+              <img id="MovieImage" src="${
+                movieList[i].image ? movieList[i].image.medium : ""
+              }" alt="No Image Found">
+              <div id ="summary"><p>${movieList[i].summary}</p></div>
+              <div id="movieType">
+              <ul><li>Rating: ${movieList[i].rating.average}</li>
+              <li>Status: ${movieList[i].status}</li>
+              <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
+              <li>Runtime: ${movieList[i].runtime}</li>`;
+              
         movieDiv.insertBefore(title, movieDiv.firstChild);
 
         let dots = movieDiv.querySelector(".text-dots");
