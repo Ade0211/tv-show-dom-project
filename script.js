@@ -59,7 +59,7 @@ const makePageForMovies = (movieList) => {
           ? data._embedded.cast.forEach(
               (person) => (cast += person.person.name + ", ")
             )
-          : NaN;
+          : "";
 
         let char_limit = 50;
         if (cast.length < char_limit) {
