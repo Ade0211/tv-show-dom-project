@@ -83,6 +83,7 @@ const makePageForMovies = (movieList) => {
               <li>Status: ${movieList[i].status}</li>
               <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
               <li>Runtime: ${movieList[i].runtime}</li>
+              <li>Cast: ${cast}</li></ul>
               </div>
               </div>`;
         movieDiv.insertBefore(title, movieDiv.firstChild);
