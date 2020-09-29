@@ -52,14 +52,14 @@ const makePageForMovies = (movieList) => {
     title.innerText = movieList[i].name;
     title.style.cursor = "pointer";
 
-    fetch(`http://api.tvmaze.com/shows/${movieList[i].id}?embed=cast`)
+    fetch(`https://api.tvmaze.com/shows/${movieList[i].id}?embed=cast`)
       .then((response) => response.json())
       .then((data) => {
         data._embedded.cast
           ? data._embedded.cast.forEach(
               (person) => (cast += person.person.name + ", ")
             )
-          : "";
+          : NaN;
 
         let char_limit = 50;
         if (cast.length < char_limit) {
