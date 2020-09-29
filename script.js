@@ -72,7 +72,7 @@ const makePageForMovies = (movieList) => {
             cast.substr(char_limit) +
             '</span><span class="text-dots">...</span><span class="show-more-button" data-more="0">Read More</span></div>';
         // console.log(cast)
-        movieDiv.innerHTML = ` 
+    cast ?    movieDiv.innerHTML = ` 
               <div id = "moviePage">
               <img id="MovieImage" src="${
                 movieList[i].image ? movieList[i].image.medium : ""
@@ -85,7 +85,7 @@ const makePageForMovies = (movieList) => {
               <li>Runtime: ${movieList[i].runtime}</li>
               <li>Cast: ${cast}</li></ul>
               </div>
-              </div>`;
+              </div>`: NaN;
         movieDiv.insertBefore(title, movieDiv.firstChild);
 
         let dots = movieDiv.querySelector(".text-dots");
