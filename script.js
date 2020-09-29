@@ -59,7 +59,7 @@ const makePageForMovies = (movieList) => {
           ? data._embedded.cast.forEach(
               (person) => (cast += person.person.name + ", ")
             )
-          : data._embedded;
+          : NaN;
 
         let char_limit = 50;
         if (cast.length < char_limit) {
@@ -83,7 +83,6 @@ const makePageForMovies = (movieList) => {
               <li>Status: ${movieList[i].status}</li>
               <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
               <li>Runtime: ${movieList[i].runtime}</li>
-              <li>Cast: ${cast}</li></ul>
               </div>
               </div>`;
         movieDiv.insertBefore(title, movieDiv.firstChild);
