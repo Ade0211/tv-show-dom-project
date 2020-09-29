@@ -83,7 +83,7 @@ const makePageForMovies = (movieList) => {
               <li>Status: ${movieList[i].status}</li>
               <li>Genre: ${movieList[i].genres.map((genre) => genre)}  </li>
               <li>Runtime: ${movieList[i].runtime}</li>
-              <li>Cast: ${cast}</li></ul>
+              <li>Cast: ${cast ? cast: ""}</li></ul>
               </div>
               </div>`;
         movieDiv.insertBefore(title, movieDiv.firstChild);
@@ -118,22 +118,17 @@ const makePageForMovies = (movieList) => {
       })
       .catch((error) => console.log(error));
     movieDiv.style.backgroundColor = "white";
-    // rootElem.style.display = "table";
     rootElem.style.display = "flex";
     rootElem.style.flexDirection = "column";
     rootElem.style.alignItems = "center";
-    // movieDiv.style.justifyContent = "space-evenly";
     movieDiv.style.flexWrap = "wrap";
     movieDiv.style.borderRadius = "5px";
     movieDiv.style.boxShadow = "15px";
-    // movieDiv.style.position ="absolute";
     movieDiv.style.width = "80%";
     movieDiv.style.margin = "10px";
     document.getElementById("back-link").style.visibility = "visible";
-    // console.log(title);
     title.addEventListener("click", () => getEpisodes(movieList[i].id));
   }
-  // counter++;
   document.getElementById(
     "charNum"
   ).textContent = `found ${movieList.length} shows`;
@@ -143,11 +138,9 @@ const makePageForMovies = (movieList) => {
 // get Seasons
 ///////////////////
 function makePageForSeasons(movieSeason) {
-  console.log(movieSeason);
   const rootElem = document.getElementById("root");
   let SeasonSelector = document.getElementById('select-season');
   let seasonOptions = SeasonSelector.querySelectorAll("option");
-  // alert("rrr");
   seasonOptions.forEach((item, ind) => ind ? SeasonSelector.removeChild(item):NaN);
 
   // loop through the array of movies
@@ -183,7 +176,6 @@ function makePageForSeasons(movieSeason) {
                 }" alt="No Image Found">
                 <div id ="summary"><p>${message}</p></div>
                 </div>`;
-    console.log(SeasonDiv);
     rootElem.appendChild(SeasonDiv);
     //////////////////
     let dots = SeasonDiv.querySelector(".text-dots");
@@ -250,7 +242,6 @@ function makePageForEpisodes(episodeList) {
     let message = episodeList[i].summary;
     if (message) {
       let char_limit = 100;
-      console.log(message.length);
       if (message.length < char_limit) {
         message = "<div> " + message + "</div>";
         console.log(message);
@@ -402,7 +393,6 @@ function search_Movies(moviePage, episodes) {
 ////////////////////////////////////////
 let selection = document.querySelector("#select");
 selection.addEventListener("change", () => {
-  alert("hi")
   let searchBar = document.getElementById("search-bar");
   console.log(selection.options[selection.selectedIndex].text.split("-"));
   searchBar.value = selection.options[selection.selectedIndex].text.split(
